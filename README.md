@@ -1,19 +1,45 @@
+# Análisis de popularidad musical en Spotify (2020-2025)
 
-#Project for Data analysis and Study
+Proyecto de análisis de datos con Python y pandas, enfocado en explorar qué variables se relacionan con la popularidad de una canción.
 
-##Que es este proyecto?
+## ¿Qué es este proyecto?
 
-Proyecto creado para explorar libreria pandas ademas de un analisis en un Dataset sintetico
+Proyecto creado para practicar la librería pandas aplicándola a un caso de análisis completo: desde la formulación de una pregunta de investigación hasta la limpieza de datos, el cálculo de estadísticas y la comunicación de resultados.
 
-##Funcion
+## Pregunta central
 
-Utiliza en su totalidad la libreria pandas con el fin de responder a la pregunta: Cómo el género, la bailabilidad, día de lanzamiento y duración se relacionan con la popularidad de una canción a través del tiempo (2020-2025)
+¿Cómo el género, la bailabilidad, el día de lanzamiento y la duración se relacionan con la popularidad de una canción a través del tiempo (2020-2025)?
 
-##Sobre el Dataset
+## Sobre el dataset
 
-Este proyecto utiliza como objeto de analisis el dataset de datos Sinteticos de Spotify extraido desde Kagglehub con el fin de tener una muestra estable, para usarla con fines de primera interaccion con la libreria previamente mencionada. al ser un dataset sintetico. las respuesta ni la informacion son fieles como podria serlo un dataset crudo de spotify
+Este proyecto utiliza un [dataset sintético de streaming de Spotify](https://www.kaggle.com/datasets/beamhonor0911/spotify-artist-streaming-analytics-20202025) descargado desde Kaggle (50,000 filas, 33 columnas).
 
-#Metodologia
+**Limitación importante**: al ser un dataset sintético (generado artificialmente, no extraído en vivo de la plataforma real), los resultados de este análisis no deben interpretarse como reflejo fiel del comportamiento real de los oyentes de Spotify. El valor de este proyecto está en practicar el *proceso* de análisis de datos, no en producir conclusiones aplicables a la industria musical real.
 
-Se hicieron uso de las variables expuestas en la pregunta ya que son las variables que a primera vista puedan relacionarse directamente con la popularidad de una cancion. 
+## Metodología
 
+1. **Validación de datos**: se verificaron nulos, duplicados y valores fuera de rango. El dataset no presentó nulos ni duplicados; el rango de años (2020-2025) fue consistente.
+2. **Elección de variable objetivo**: se usó `popularity` en lugar de `stream_count`, ya que esta última está sesgada por el tiempo que una canción lleva disponible en la plataforma.
+3. **Género**: se agruparon los géneros con menos de 2,000 canciones en la categoría "Otros" (para evitar promedios poco confiables por tamaño de muestra pequeño), y se calculó promedio, desviación estándar y conteo de `popularity` por grupo, además de su evolución año a año.
+4. **Bailabilidad y duración**: al ser variables numéricas continuas, se calculó su correlación de Pearson con `popularity` en lugar de agruparlas en categorías.
+5. **Día de lanzamiento**: se comparó el promedio y desviación estándar de `popularity` entre canciones lanzadas en fin de semana vs. entre semana.
+
+A lo largo del análisis se usó deliberadamente el lenguaje de "relación" y "correlación", no de "causa", ya que el método empleado no permite establecer causalidad.
+
+## Hallazgos
+
+ Variable 
+ Género : Diferencias de promedio de popularidad menores a 1 punto entre géneros (sobre una desviación estándar de ~16) |
+ Bailabilidad (danceability) : Correlación de 0.001 con popularidad 
+ Día de lanzamiento (weekend) : Diferencia de promedio de apenas 0.02 puntos entre weekend y entre semana |
+ Duración : Correlación de 0.0017 con popularidad 
+
+## Conclusión
+
+Con la información reunida, podemos decir que, a través de los años, la bailabilidad, el género, el día de lanzamiento y la duración no se relacionan de la manera que se pensaría a primera vista (al menos para este dataset sintético). Las diferencias encontradas en todos los casos son demasiado pequeñas frente a la variabilidad interna de cada grupo, lo cual es consistente con la posibilidad de que la columna `popularity` haya sido generada de forma independiente a las demás variables en este dataset específico.
+
+## Herramientas utilizadas
+
+- Python
+- pandas
+- matplotlib / seaborn
